@@ -1,0 +1,9 @@
+*.o
+*.so
+.idea
+compile_commands.json
+.dependencies
+skin/dist
+skin/.editorconfig
+skin/node_modules
+skin/package-lock.json
