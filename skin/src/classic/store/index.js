@@ -20,7 +20,6 @@ const mutations = {
   },
 
   setPayload (state, data) {
-    // console.log('In SetPayload: ' + JSON.stringify(data))
     state.payload = data
   }
 }

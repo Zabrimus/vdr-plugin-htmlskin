@@ -8,7 +8,6 @@
 import displaychannel from './components/displaychannel'
 import displaymessage from './components/displaymessage'
 import displaymenubase from './components/displaymenubase'
-import displaymenu from './components/displaymenu'
 import displaymenuevent from './components/displaymenuevent'
 import displayreplay from './components/displayreplay'
 import displaytracks from './components/displaytracks'
@@ -19,7 +18,7 @@ export default {
 
   components: {
     /* eslint-disable vue/no-unused-components */
-    displaychannel, displaymessage, displaymenubase, displaymenu, displaymenuevent, displayreplay, displaytracks, displayvolume
+    displaychannel, displaymessage, displaymenubase, displaymenuevent, displayreplay, displaytracks, displayvolume
   },
 
   mounted () {
