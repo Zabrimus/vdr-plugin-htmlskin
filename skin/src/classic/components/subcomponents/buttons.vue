@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="button-container">
         <div class="red">
             {{ buttons.red }}
         </div>
@@ -31,29 +31,36 @@ export default {
 </script>
 
 <style scoped lang="less">
-    @import '../../assets/globalstyle.less';
+@import '../../assets/globalstyle.less';
 
-    .red {
-        grid-area: red;
-        color: @clrButtonRedFg;
-        background-color: @clrButtonRedBg;
-    }
+.button-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto;
+    grid-template-areas: "red green yellow blue";
+}
 
-    .green {
-        grid-area: green;
-        color: @clrButtonGreenFg;
-        background-color: @clrButtonGreenBg;
-    }
+.red {
+    grid-area: red;
+    color: @clrButtonRedFg;
+    background-color: @clrButtonRedBg;
+}
 
-    .yellow {
-        grid-area: yellow;
-        color: @clrButtonYellowFg;
-        background-color: @clrButtonYellowBg;
-    }
+.green {
+    grid-area: green;
+    color: @clrButtonGreenFg;
+    background-color: @clrButtonGreenBg;
+}
 
-    .blue {
-        grid-area: blue;
-        color: @clrButtonBlueFg;
-        background-color: @clrButtonBlueBg;
-    }
+.yellow {
+    grid-area: yellow;
+    color: @clrButtonYellowFg;
+    background-color: @clrButtonYellowBg;
+}
+
+.blue {
+    grid-area: blue;
+    color: @clrButtonBlueFg;
+    background-color: @clrButtonBlueBg;
+}
 </style>

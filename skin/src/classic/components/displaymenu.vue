@@ -1,14 +1,21 @@
 <template>
     <div class="displaymenu">
         <div class="grid-container">
-            <div class="header">
-                {{ title }}
-                <span class="currentTime">{{ currentTime }}</span>
+            <div class="message" :class="messagestyle(message)">
+                {{ message.message }}
+            </div>
+
+            <div class="buttons">
+                <buttons></buttons>
+            </div>
+
+            <div class="scrollbar">
+                <scrollbar></scrollbar>
             </div>
 
             <div class="menu">
                 <table>
-                    <tr v-for="item in items" :class="{ 'current': item.current, 'nselectable': !item.selectable, 'selectable': item.selectable }" :key="item.idx">
+                    <tr v-for="item in items" :class="{ 'nselectable': !item.selectable, 'selectable': item.selectable, 'current': item.current }" :key="item.idx">
                         <td v-for="(sp,chidx) in splitItem(item.text)" :style="tabch(chidx)" :key="sp.xxx">
                             {{ sp }}
                         </td>
@@ -16,39 +23,23 @@
                 </table>
             </div>
 
-            <div class="message"  :class="messagestyle(message)">
-                {{ message.message }}
+            <div class="header">
+                {{ title }}
+                <span class="currentTime">{{ currentTime }}</span>
             </div>
-
-            <div class="red">
-                {{ buttons.red }}
-            </div>
-
-            <div class="green">
-                {{ buttons.green }}
-            </div>
-
-            <div class="yellow">
-                {{ buttons.yellow }}
-            </div>
-
-            <div class="blue">
-                {{ buttons.blue }}
-            </div>
-
-            <scrollbar class="scrollbar"></scrollbar>
         </div>
     </div>
 </template>
 
 <script>
 import scrollbar from './subcomponents/scrollbar'
+import buttons from './subcomponents/buttons'
 
 export default {
   name: 'displaymenu',
 
   components: {
-    scrollbar
+    scrollbar, buttons
   },
 
   created () {
@@ -131,11 +122,36 @@ export default {
     transform: translate(-50%, -50%);
 }
 
+.grid-container * {
+    border: 0;
+    position: relative;
+}
+
 .grid-container {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr auto;
+    height: 100%;
+    grid-template-columns: 1fr auto;
     grid-template-rows: auto 1fr auto auto;
-    grid-template-areas: "header header header header header" "menu menu menu menu scrollbar" "message message message message scrollbar" "red green yellow blue blue";
+    grid-template-areas: "header header" "menu scrollbar" "message message" "buttons buttons";
+}
+
+.message {
+    grid-area: message;
+}
+
+.buttons {
+    grid-area: buttons;
+}
+
+.scrollbar {
+    grid-area: scrollbar;
+    width: 10px;
+    height: 100%;
+}
+
+.menu {
+    grid-area: menu;
+    text-align: left;
     height: 100%;
 }
 
@@ -151,47 +167,8 @@ export default {
     margin-left: 85%;
 }
 
-.menu {
-    grid-area: menu;
-    text-align: left;
-}
-
-.scrollbar {
-    grid-area: scrollbar;
-    width: 20px;
-    height: 100%;
-}
-
-.message {
-    grid-area: message;
-}
-
-.red {
-    grid-area: red;
-    color: @clrButtonRedFg;
-    background-color: @clrButtonRedBg;
-}
-
-.green {
-    grid-area: green;
-    color: @clrButtonGreenFg;
-    background-color: @clrButtonGreenBg;
-}
-
-.yellow {
-    grid-area: yellow;
-    color: @clrButtonYellowFg;
-    background-color: @clrButtonYellowBg;
-}
-
-.blue {
-    grid-area: blue;
-    color: @clrButtonBlueFg;
-    background-color: @clrButtonBlueBg;
-}
-
 .current {
-    color: @clrBlack;
+    color: @clrBlack !important;
     background-color: @clrCyan;
 }
 
@@ -222,5 +199,4 @@ export default {
     color: @clrMessageErrorFg;
     background-color: @clrMessageErrorBg;
 }
-
 </style>
