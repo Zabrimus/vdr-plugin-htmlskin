@@ -43,27 +43,20 @@
                 {{ buttons.blue }}
             </div>
 
-            <div class="scrollbar" v-if="calcsb.height > 0">
-                <svg viewBox="0 0 20 600" class="sbsvg" preserveAspectRatio="none">
-                    <rect id="eins" x="0" y="0"   width="20" height="600" fill="#1a53ff" />
-                    <rect id="zwei" x="0" :y="calcsb.y" width="20" :height="calcsb.height" fill="#ffff99" />
-                </svg>
-            </div>
+            <scrollbar class="scrollbar"></scrollbar>
         </div>
     </div>
 </template>
 
 <script>
-
-/*
-   payload.title    title
-   payload.buttons  buttons
-   payload.message  message
-   payload.event    event
-*/
+import scrollbar from './subcomponents/scrollbar'
 
 export default {
   name: 'displaymenuevent',
+
+  components: {
+    scrollbar
+  },
 
   created () {
   },
@@ -110,25 +103,6 @@ export default {
 
     event () {
       return this.$myStore.state.payload.event.event
-    },
-
-    scrollbar () {
-      return this.$myStore.state.payload.scrollbar
-    },
-
-    calcsb () {
-      if (typeof this.scrollbar === 'undefined' || this.scrollbar === null) {
-        return { height: 0, y: 0 }
-      }
-
-      if (this.scrollbar.total > 0 && this.scrollbar.total > this.scrollbar.max) {
-        var ch = 600 * this.scrollbar.max / this.scrollbar.total
-        var cy = 600 * this.scrollbar.offset / this.scrollbar.total
-
-        return { height: ch, y: cy }
-      } else {
-        return { height: 0, y: 0 }
-      }
     }
   }
 }
@@ -138,8 +112,7 @@ export default {
 @import '../assets/globalstyle.less';
 
 .displaymenuevent {
-    background-color: yellow;
-    background-color:rgba(0, 0, 0, 0.9);
+    background-color: @clrBackground;
     position: absolute;
     width: 90%;
     height: 90%;
@@ -166,12 +139,6 @@ export default {
     grid-area: scrollbar;
     width: 20px;
     height: 100%;
-}
-
-.sbsvg {
-    height: 95%;
-    width:20px;
-    padding-top:10px;
 }
 
 .time {

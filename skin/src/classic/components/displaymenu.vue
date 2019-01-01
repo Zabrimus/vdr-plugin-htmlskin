@@ -3,11 +3,12 @@
         <div class="grid-container">
             <div class="header">
                 {{ title }}
+                <span class="currentTime">{{ currentTime }}</span>
             </div>
 
             <div class="menu">
                 <table>
-                    <tr v-for="item in items" :class="{ 'current': item.current, 'nselectable': !item.selectable }" :key="item.idx">
+                    <tr v-for="item in items" :class="{ 'current': item.current, 'nselectable': !item.selectable, 'selectable': item.selectable }" :key="item.idx">
                         <td v-for="(sp,chidx) in splitItem(item.text)" :style="tabch(chidx)" :key="sp.xxx">
                             {{ sp }}
                         </td>
@@ -15,7 +16,7 @@
                 </table>
             </div>
 
-            <div class="message" :style="messagestyle(message)">
+            <div class="message"  :class="messagestyle(message)">
                 {{ message.message }}
             </div>
 
@@ -35,28 +36,20 @@
                 {{ buttons.blue }}
             </div>
 
-            <div class="scrollbar" v-if="calcsb.height > 0">
-                <svg viewBox="0 0 20 600" class="sbsvg" preserveAspectRatio="none">
-                    <rect id="eins" x="0" y="0"   width="20" height="600" fill="#1a53ff" />
-                    <rect id="zwei" x="0" :y="calcsb.y" width="20" :height="calcsb.height" fill="#ffff99" />
-                </svg>
-            </div>
+            <scrollbar class="scrollbar"></scrollbar>
         </div>
     </div>
 </template>
 
 <script>
-
-/*
-   payload.title    title
-   payload.buttons  buttons
-   payload.message  message
-   payload.items    items
-   payload.tabs     tabs
-*/
+import scrollbar from './subcomponents/scrollbar'
 
 export default {
   name: 'displaymenu',
+
+  components: {
+    scrollbar
+  },
 
   created () {
   },
@@ -74,13 +67,13 @@ export default {
       var x = this.tabs[idx]
 
       if (idx === 0 && this.tabs[idx + 1] === 0) {
-        return { width: 'auto' }
+        return { width: 'auto', whiteSpace: 'nowrap', overflow: 'hidden' }
       }
 
       if (x === 0) {
-        return { width: 'auto' }
+        return { width: 'auto', whiteSpace: 'nowrap', overflow: 'hidden' }
       } else {
-        return { width: x + 'ch' }
+        return { width: x + 'ch', whiteSpace: 'nowrap', overflow: 'hidden' }
       }
     },
 
@@ -89,16 +82,7 @@ export default {
         return
       }
 
-      switch (message.type) {
-        case 0:
-          return { backgroundColor: 'LightYellow' }
-        case 1:
-          return { backgroundColor: 'OldLace' }
-        case 2:
-          return { backgroundColor: 'orangered' }
-        case 3:
-          return { backgroundColor: 'red' }
-      }
+      return 'message_' + message.type
     }
   },
 
@@ -123,22 +107,11 @@ export default {
       return this.$myStore.state.payload.message
     },
 
-    scrollbar () {
-      return this.$myStore.state.payload.scrollbar
-    },
-
-    calcsb () {
-      if (typeof this.scrollbar === 'undefined' || this.scrollbar === null) {
-        return { height: 0, y: 0 }
-      }
-
-      if (this.scrollbar.total > 0 && this.scrollbar.total > this.scrollbar.max) {
-        var ch = 600 * this.scrollbar.max / this.scrollbar.total
-        var cy = 600 * this.scrollbar.offset / this.scrollbar.total
-
-        return { height: ch, y: cy }
-      } else {
-        return { height: 0, y: 0 }
+    currentTime: {
+      cache: false,
+      get () {
+        var d = new Date()
+        return d.getDate() + '.' + (d.getMonth() + 1) + '.' + d.getFullYear() + '  ' + ('0' + d.getHours()).slice(-2) + ':' + ('0' + d.getMinutes()).slice(-2)
       }
     }
   }
@@ -149,8 +122,7 @@ export default {
 @import '../assets/globalstyle.less';
 
 .displaymenu {
-    background-color: yellow;
-    background-color:rgba(0, 0, 0, 0.9);
+    background-color: @clrBackground;
     position: absolute;
     width: 90%;
     height: 90%;
@@ -169,8 +141,14 @@ export default {
 
 .header {
     grid-area: header;
-    background-color: yellow;
     text-align: left;
+    color: @clrMenuTitleFg;
+    background-color: @clrMenuTitleBg;
+}
+
+.currentTime {
+    text-align: right;
+    margin-left: 85%;
 }
 
 .menu {
@@ -184,42 +162,65 @@ export default {
     height: 100%;
 }
 
-.sbsvg {
-    height: 95%;
-    width:20px;
-    padding-top:10px;
-}
-
 .message {
     grid-area: message;
 }
 
 .red {
     grid-area: red;
-    background-color: red;
+    color: @clrButtonRedFg;
+    background-color: @clrButtonRedBg;
 }
 
 .green {
     grid-area: green;
-    background-color: green;
+    color: @clrButtonGreenFg;
+    background-color: @clrButtonGreenBg;
 }
 
 .yellow {
     grid-area: yellow;
-    background-color: yellow;
+    color: @clrButtonYellowFg;
+    background-color: @clrButtonYellowBg;
 }
 
 .blue {
     grid-area: blue;
-    background-color: blue;
+    color: @clrButtonBlueFg;
+    background-color: @clrButtonBlueBg;
 }
 
 .current {
-    background-color: gainsboro;
+    color: @clrBlack;
+    background-color: @clrCyan;
 }
 
 .nselectable {
-    font-style: italic;
-
+    color: @clrMenuItemNonSelectable;
 }
+
+.selectable {
+    color: @clrMenuItemSelectable;
+}
+
+.message_0 {
+    color: @clrMessageStatusFg;
+    background-color: @clrMessageStatusBg;
+}
+
+.message_1 {
+    color: @clrMessageInfoFg;
+    background-color: @clrMessageInfoBg;
+}
+
+.message_2 {
+    color: @clrMessageWarningFg;
+    background-color: @clrMessageWarningBg;
+}
+
+.message_3 {
+    color: @clrMessageErrorFg;
+    background-color: @clrMessageErrorBg;
+}
+
 </style>

@@ -4,10 +4,6 @@ const isProduction = process.env.NODE_ENV === 'production'
 const glob = require('glob')
 const pages = {}
 
-module.exports = {
-  baseUrl: isProduction ? './' : ''
-}
-
 glob.sync('./src/**/main.js').forEach(path => {
   const chunk = path.split('./src/')[1].split('/main.js')[0]
   pages[chunk] = {
@@ -18,6 +14,7 @@ glob.sync('./src/**/main.js').forEach(path => {
 })
 
 module.exports = {
+  baseUrl: isProduction ? './' : '',
   pages,
   chainWebpack: config => config.plugins.delete('named-chunks'),
   devServer: {

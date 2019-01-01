@@ -78,6 +78,7 @@ export default {
 @import '../assets/globalstyle.less';
 
 .displaytracks {
+    background-color: @clrBackground;
     position: absolute;
     width: 90%;
     height: 100%;

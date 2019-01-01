@@ -31,7 +31,7 @@ char* cHtmlSkin::skinUrl;
 cHtmlSkin* skin;
 
 cHtmlSkin::cHtmlSkin() : cSkin("html-skin") {
-    asprintf(&skinUrl, "file://%s%s", cPlugin::ResourceDirectory("htmlskin"), "/skin/index.html");
+    asprintf(&skinUrl, "file://%s%s", cPlugin::ResourceDirectory("htmlskin"), "/skin/classic.html");
 
     skin = this;
 

@@ -51,8 +51,7 @@ export default {
 @import '../assets/globalstyle.less';
 
 .displayvolume {
-    background-color: yellow;
-    background-color:rgba(0, 0, 0, 0.9);
+    background-color: @clrBackground;
     position: absolute;
     bottom: 2em;
     width: 90%;

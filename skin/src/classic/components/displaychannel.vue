@@ -39,12 +39,6 @@
 
 <script>
 
-/*
-   payload.channel          channel
-   payload.events.present   present event
-   payload.events.following following event
-*/
-
 export default {
   name: 'displaychannel',
 
@@ -83,7 +77,7 @@ export default {
       cache: false,
       get () {
         var d = new Date()
-        return ('0' + d.getHours()).slice(-2) + ':' + ('0' + d.getMinutes()).slice(-2)
+        return d.getDate() + '.' + (d.getMonth() + 1) + '.' + d.getFullYear() + '  ' + ('0' + d.getHours()).slice(-2) + ':' + ('0' + d.getMinutes()).slice(-2)
       }
     }
   }
@@ -94,8 +88,7 @@ export default {
 @import '../assets/globalstyle.less';
 
 .displaychannel {
-   background-color: yellow;
-   background-color:rgba(0, 0, 0, 0.9);
+   background-color: @clrBackground;
    position: absolute;
    bottom: 2em;
    width: 90%;
@@ -117,21 +110,24 @@ export default {
 .present_time {
     grid-area: present_time;
     text-align: left;
-    background-color:rgba(200, 200, 20, 0.9);
     font-weight: bold;
+    color: @clrChannelEpgTimeFg;
+    background-color: @clrChannelEpgTimeBg;
 }
 
 .following_time {
     grid-area: following_time;
     text-align: left;
-    background-color:rgba(200, 200, 20, 0.9);
     font-weight: bold;
+    color: @clrChannelEpgTimeFg;
+    background-color: @clrChannelEpgTimeBg;
 }
 
 .present_title {
     grid-area: present_title;
     text-align: left;
     font-weight: bold;
+    color: @clrChannelEpgTitle;
 }
 
 .present_shorttext {
@@ -139,12 +135,14 @@ export default {
     text-align: left;
     overflow: hidden;
     font-size:small;
+    color: @clrChannelEpgShortText;
 }
 
 .following_title {
     grid-area: following_title;
     text-align: left;
     font-weight: bold;
+    color: @clrChannelEpgTitle;
 }
 
 .following_shorttext {
@@ -152,18 +150,21 @@ export default {
     text-align: left;
     overflow: hidden;
     font-size:small;
+    color: @clrChannelEpgShortText;
 }
 
 .channel {
     grid-area: channel;
     text-align: left;
     font-weight: bold;
+    color: @clrChannelName;
 }
 
 .current_time {
     text-align: right;
     font-weight: bold;
     width:100%;
+    color: @clrChannelDate;
 }
 
 .channel_name {
