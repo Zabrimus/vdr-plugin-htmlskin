@@ -124,6 +124,11 @@ void cHtmlSkinDisplayMenu::SetRecording(const cRecording *Recording) {
 
 void cHtmlSkinDisplayMenu::SetText(const char *Text, bool FixedFont) {
     dbgskin("Skin:cHtmlSkinDisplayMenu::SetText(%s, %d)\n", Text, FixedFont);
+
+    doFlush = true;
+
+    const char* key = "menutext";
+    JsonUtil::replaceKey(data, key, json_pack("{ss,sb}", "text", Text, "fixedFont", FixedFont));
 }
 
 int cHtmlSkinDisplayMenu::GetTextAreaWidth() const {
@@ -209,6 +214,9 @@ void cHtmlSkinDisplayMenu::Flush() {
 
     if (doFlush) {
         cHtmlSkin::callJavascript(cString("showPage"), cString("displaymenubase"), data);
+
+        // delete some objects
+        json_object_del(data, "menutext");
     }
 
     doFlush = false;

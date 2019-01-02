@@ -13,7 +13,16 @@
                 <scrollbar></scrollbar>
             </div>
 
-            <div class="menu">
+            <!-- Begin: Menuitems or text -->
+            <!-- IF -->
+            <div class="menu" v-if="hasText" >
+                <span v-for="line in splitMenuText" class="menutext" :key="line.xxx">
+                    {{ line }} <br/>
+                </span>
+            </div>
+
+            <!-- ELSE -->
+            <div class="menu" v-else>
                 <table>
                     <tr v-for="item in items" :class="{ 'nselectable': !item.selectable, 'selectable': item.selectable, 'current': item.current }" :key="item.idx">
                         <td v-for="(sp,chidx) in splitItem(item.text)" :style="tabch(chidx)" :key="sp.xxx">
@@ -22,6 +31,7 @@
                     </tr>
                 </table>
             </div>
+            <!-- End: Menuitems or text -->
 
             <div class="header">
                 <titlec></titlec>
@@ -59,13 +69,13 @@ export default {
       var x = this.tabs[idx]
 
       if (idx === 0 && this.tabs[idx + 1] === 0) {
-        return { width: 'auto', whiteSpace: 'nowrap', overflow: 'hidden' }
+        return { width: 'auto', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }
       }
 
       if (x === 0) {
-        return { width: 'auto', whiteSpace: 'nowrap', overflow: 'hidden' }
+        return { width: 'auto', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }
       } else {
-        return { width: x + 'ch', whiteSpace: 'nowrap', overflow: 'hidden' }
+        return { width: x + 'ch', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }
       }
     }
   },
@@ -81,6 +91,23 @@ export default {
 
     tabs () {
       return this.$myStore.state.payload.tabs
+    },
+
+    menutext () {
+      return this.$myStore.state.payload.menutext
+    },
+
+    hasText () {
+      var t = this.$myStore.state.payload.menutext
+      return (typeof t !== 'undefined') && (typeof t.text !== 'undefined')
+    },
+
+    splitMenuText () {
+      if (typeof this.$myStore.state.payload.menutext !== 'undefined') {
+        return this.$myStore.state.payload.menutext.text.split('\n')
+      } else {
+        return ''
+      }
     }
   }
 }
@@ -107,6 +134,7 @@ export default {
 .grid-container {
     display: grid;
     height: 100%;
+    overflow: hidden;
     grid-template-columns: 1fr auto;
     grid-template-rows: auto 1fr auto auto;
     grid-template-areas: "header header" "menu scrollbar" "message message" "buttons buttons";
@@ -143,6 +171,12 @@ export default {
 
 .nselectable {
     color: @clrMenuItemNonSelectable;
+}
+
+.menutext {
+    color: @clrMenuItemNonSelectable;
+    text-overflow: ellipsis;
+    overflow:hidden;
 }
 
 .selectable {
