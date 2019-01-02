@@ -1,190 +1,100 @@
 <template>
-    <div class="displaymenuevent">
+    <div class="displaymenu">
         <div class="grid-container">
+            <div class="message">
+                <message></message>
+            </div>
+
+            <div class="buttons">
+                <buttons></buttons>
+            </div>
+
+            <div class="scrollbar">
+                <scrollbar></scrollbar>
+            </div>
+
+            <div class="event">
+                <event></event>
+            </div>
+
             <div class="header">
-                {{ title }}
+                <titlec></titlec>
             </div>
-
-            <div class="time">
-                {{ event.startDateStr }} {{ event.startTimeStr }} - {{ event.endTimeStr }}
-            </div>
-
-            <div class="shorttext">
-                {{ event.shortText }}
-            </div>
-
-            <div class="description">
-                <span v-for="sp in splitDescription(event.description)" :key="sp.xxx">
-                    {{ sp }} <br/>
-                </span>
-            </div>
-
-            <div class="message" :style="messagestyle(message)">
-                {{ message.message }}
-            </div>
-
-            <div class="title">
-                {{ event.title }}
-            </div>
-
-            <div class="red">
-                {{ buttons.red }}
-            </div>
-
-            <div class="green">
-                {{ buttons.green }}
-            </div>
-
-            <div class="yellow">
-                {{ buttons.yellow }}
-            </div>
-
-            <div class="blue">
-                {{ buttons.blue }}
-            </div>
-
-            <scrollbar class="scrollbar"></scrollbar>
         </div>
     </div>
 </template>
 
 <script>
 import scrollbar from './subcomponents/scrollbar'
+import buttons from './subcomponents/buttons'
+import titlec from './subcomponents/title'
+import message from './subcomponents/message'
+import event from './subcomponents/event'
 
 export default {
   name: 'displaymenuevent',
 
   components: {
-    scrollbar
+    scrollbar, buttons, titlec, message, event
   },
 
   created () {
   },
 
   methods: {
-    splitDescription (description) {
-      if (typeof description !== 'undefined') {
-        return description.split('\n')
-      } else {
-        return ''
-      }
-    },
-
-    messagestyle (message) {
-      if (message === null) {
-        return
-      }
-
-      switch (message.type) {
-        case 0:
-          return { backgroundColor: 'LightYellow' }
-        case 1:
-          return { backgroundColor: 'OldLace' }
-        case 2:
-          return { backgroundColor: 'orangered' }
-        case 3:
-          return { backgroundColor: 'red' }
-      }
-    }
   },
 
   computed: {
-    title () {
-      return this.$myStore.state.payload.title
-    },
-
-    buttons () {
-      return this.$myStore.state.payload.buttons
-    },
-
-    message () {
-      return this.$myStore.state.payload.message
-    },
-
-    event () {
-      return this.$myStore.state.payload.event.event
-    }
   }
 }
 </script>
 
 <style scoped lang="less">
-@import '../assets/globalstyle.less';
+    @import '../assets/globalstyle.less';
 
-.displaymenuevent {
-    background-color: @clrBackground;
-    position: absolute;
-    width: 90%;
-    height: 90%;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-}
+    .displaymenu {
+        background-color: @clrBackground;
+        position: absolute;
+        width: 90%;
+        height: 90%;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
 
-.grid-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr auto;
-    grid-template-rows: auto auto auto auto 1fr auto auto;
-    grid-template-areas: "header header header header header" "time time time time scrollbar" "title title title title scrollbar" "shorttext shorttext shorttext shorttext scrollbar" "description description description description scrollbar" "message message message message scrollbar" "red green yellow blue blue";
-    height: 100%;
-}
+    .grid-container * {
+        border: 0;
+        position: relative;
+    }
 
-.header {
-    grid-area: header;
-    background-color: yellow;
-    text-align: left;
-}
+    .grid-container {
+        display: grid;
+        height: 100%;
+        grid-template-columns: 1fr auto;
+        grid-template-rows: auto 1fr auto auto;
+        grid-template-areas: "header header" "event scrollbar" "message message" "buttons buttons";
+    }
 
-.scrollbar {
-    grid-area: scrollbar;
-    width: 20px;
-    height: 100%;
-}
+    .message {
+        grid-area: message;
+    }
 
-.time {
-    grid-area: time;
-    text-align: left;
-    padding-bottom: 20px;
-    padding-top: 20px;
-}
+    .buttons {
+        grid-area: buttons;
+    }
 
-.shorttext {
-    grid-area: shorttext;
-    text-align: left;
-    font-weight: 700;
-    font-style: italic;
-    padding-bottom: 20px;
-}
+    .scrollbar {
+        grid-area: scrollbar;
+        width: 10px;
+        height: 100%;
+    }
 
-.description {
-    grid-area: description;
-    text-align: left;
-}
+    .event {
+        grid-area: event;
+        height: 100%;
+    }
 
-.title {
-    grid-area: title;
-    text-align: left;
-    font-weight: bold;
-    font-size: 120%;
-}
-
-.red {
-    grid-area: red;
-    background-color: red;
-}
-
-.green {
-    grid-area: green;
-    background-color: green;
-}
-
-.yellow {
-    grid-area: yellow;
-    background-color: yellow;
-}
-
-.blue {
-    grid-area: blue;
-    background-color: blue;
-}
+    .header {
+        grid-area: header;
+    }
 </style>

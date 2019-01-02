@@ -70,5 +70,7 @@ void cHtmlSkinDisplayChannel::Flush() {
         cHtmlSkin::callJavascript(cString("showPage"), cString("displaychannel"), data);
     }
 
+    // FlushOsd();
+
     doFlush = false;
 }

@@ -1,5 +1,20 @@
 <template>
     <div class="displaytracks">
+        <div class="track-container">
+            <div class="tracks">
+                <ul>
+                    <li class="title">{{ title }}</li>
+
+                    <li v-for="tr in tracks" :key="tr.idx" :class="selected(tr)">
+                        {{ tr }}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!--
+    <div class="displaytracks">
         <div class="grid-container">
             <div class="filler">
             </div>
@@ -15,29 +30,8 @@
             </div>
         </div>
     </div>
+    -->
 </template>
-
-/*
-{
-    "action": "showPage",
-    "page": "displaytracks",
-    "data": {
-        "title": "Audio",
-        "numTracks": 2,
-        "tracks": [
-            "stereo",
-            "mit Audiodeskription"
-        ],
-        "track": {
-            "value": "stereo",
-            "index": 0
-        },
-        "audio": {
-            "channel": 0
-        }
-    }
-}
-*/
 
 <script>
 export default {
@@ -50,6 +44,8 @@ export default {
     selected (v) {
       if (v === this.track.value) {
         return 'selected'
+      } else {
+        return 'unselected'
       }
     }
   },
@@ -80,39 +76,39 @@ export default {
 .displaytracks {
     background-color: @clrBackground;
     position: absolute;
-    width: 90%;
-    height: 100%;
-    left: 50%;
-    transform: translate(-50%, 0);
+    bottom: 2em;
+    left: 20%;
+    transform: translate(-20%, 0);
 }
 
-.grid-container {
+.track-container {
     display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr auto;
-    grid-template-areas: "filler" "tracks";
-    height: 100%;
-}
-
-.filler {
-    grid-area: filler;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+    grid-template-areas: "tracks";
 }
 
 .tracks {
     grid-area: tracks;
-    background-color: yellow;
-    background-color:rgba(0, 0, 0, 0.9);
+    text-align: center;
 }
 
 .tracks ul {
     list-style-type: none;
+    margin: auto;
+    padding: 0;
 }
 
 .title {
-    background-color: yellow;
+    background-color: @clrMenuItemNonSelectable;
 }
 
 .selected {
-    background-color: gainsboro;
+    color: @clrBlack !important;
+    background-color: @clrCyan;
+}
+
+.unselected {
+    color: @clrMenuItemSelectable;
 }
 </style>

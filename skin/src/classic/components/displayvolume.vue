@@ -2,9 +2,9 @@
     <div class="displayvolume">
         <div class="grid-container">
             <div class="volume" v-if="! vol.mute">
-                <svg viewBox="0 0 600 20" class="sbsvg" preserveAspectRatio="none">
-                    <rect id="eins" x="0" y="0" width="600" height="20" fill="#1a53ff" />
-                    <rect id="zwei" x="0" y="0" :width="calcsb.width" height="20" fill="#ffff99" />
+                <svg viewBox="0 0 600 10" class="sbsvg" preserveAspectRatio="none">
+                    <rect id="eins" x="0" y="0" width="600" height="10" class="volume_rest"  />
+                    <rect id="zwei" x="0" y="0" :width="calcsb.width" height="10" class="volume_sel" />
                 </svg>
             </div>
 
@@ -68,6 +68,20 @@ export default {
 
 .volume {
     grid-area: volume;
+    color: @clrVolumeBarUpper;
+
 }
 
+.volume_rest {
+    fill: @clrVolumeBarUpper;
+}
+
+.volume_sel {
+    fill: @clrVolumeBarLower;
+}
+
+/*
+TODO:
+@clrVolumePrompt:           @clrGreen;
+*/
 </style>

@@ -82,6 +82,10 @@ void cOsdUpdateThread::stopUpdate() {
     dbgskin("Finished stop\n");
 }
 
+void cOsdUpdateThread::FlushOsd() {
+    osd->Flush();
+}
+
 void cOsdUpdateThread::readStream(cPixmapMemory *pixmap) {
     int bytes;
 
@@ -89,7 +93,8 @@ void cOsdUpdateThread::readStream(cPixmapMemory *pixmap) {
     while(upd->isRunning) {
         unsigned long dirtyRecs = 0;
         if ((bytes = nn_recv(upd->streamSocketId, &dirtyRecs, sizeof(dirtyRecs), 0)) > 0) {
-            dsyslog("Count of dirty recs: %lu", dirtyRecs);
+            dsyslog("Count of dirty recs: %lu\n", dirtyRecs);
+            dbgskin("Count of dirty recs: %lu\n", dirtyRecs);
 
             for (unsigned long i = 0; i < dirtyRecs; ++i) {
                 // read coordinates and size
@@ -106,8 +111,8 @@ void cOsdUpdateThread::readStream(cPixmapMemory *pixmap) {
                 if ((bytes = nn_recv(upd->streamSocketId, &h, sizeof(h), 0)) > 0) {
                 }
 
-                dsyslog("Received dirty rec: (x %d, y %d) -> (w %d, h %d)",x,y,w,h);
-                dbgskin("Received dirty rec: (x %d, y %d) -> (w %d, h %d)",x,y,w,h);
+                dsyslog("Received dirty rec: (x %d, y %d) -> (w %d, h %d)\n",x, y, w, h);
+                dbgskin("Received dirty rec: (x %d, y %d) -> (w %d, h %d)\n",x, y, w, h);
 
                 {
                     // create empty image and fill the image data

@@ -6,9 +6,9 @@
             </div>
 
             <div class="progress">
-                <svg viewBox="0 0 600 20" class="sbsvg" preserveAspectRatio="none">
-                    <rect id="eins" x="0" y="0" width="600" height="20" fill="#1a53ff" />
-                    <rect id="zwei" x="0" y="0" :width="calcsb.width" height="20" fill="#ffff99" />
+                <svg viewBox="0 0 600 10" class="sbsvg" preserveAspectRatio="none">
+                    <rect id="eins" x="0" y="0" width="600" height="10" class="progress_rest" />
+                    <rect id="zwei" x="0" y="0" :width="calcsb.width" height="10" class="progress_seen" />
                 </svg>
             </div>
 
@@ -109,6 +109,7 @@ export default {
 .header {
     grid-area: header;
     text-align: left;
+    color: @clrReplayTitle;
 }
 
 .progress {
@@ -118,19 +119,36 @@ export default {
 .start {
     grid-area: start;
     text-align: left;
+    color: @clrReplayCurrent;
 }
 
 .jump {
     grid-area: jump;
+    color: @clrReplayModeJump;
 }
 
 .end {
     grid-area: end;
     text-align: right;
+    color: @clrReplayTotal;
 }
 
 .message {
     grid-area: message;
 }
 
+.progress_rest {
+    fill: @clrReplayProgressRest;
+}
+
+.progress_seen {
+    fill: @clrReplayProgressSeen;
+}
 </style>
+
+/*
+TODO: Schnittmarken
+@clrReplayProgressSelected: @clrRed;
+@clrReplayProgressMark:     @clrBlack;
+@clrReplayProgressCurrent:  @clrRed;
+*/

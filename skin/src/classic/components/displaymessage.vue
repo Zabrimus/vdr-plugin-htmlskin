@@ -1,16 +1,19 @@
 <template>
     <div class="displaymessage">
         <div class="grid-container">
-            <div class="message">
-                {{ message.text }}
-                {{ message.type }}
-            </div>
+            <message></message>
         </div>
     </div>
 </template>
 <script>
+import message from './subcomponents/message'
+
 export default {
   name: 'displaymessage',
+
+  components: {
+    message
+  },
 
   created () {
   },
@@ -19,9 +22,6 @@ export default {
   },
 
   computed: {
-    message () {
-      return this.$myStore.state.payload.message
-    }
   }
 }
 </script>

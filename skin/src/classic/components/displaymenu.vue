@@ -1,8 +1,8 @@
 <template>
     <div class="displaymenu">
         <div class="grid-container">
-            <div class="message" :class="messagestyle(message)">
-                {{ message.message }}
+            <div class="message">
+                <message></message>
             </div>
 
             <div class="buttons">
@@ -24,8 +24,7 @@
             </div>
 
             <div class="header">
-                {{ title }}
-                <span class="currentTime">{{ currentTime }}</span>
+                <titlec></titlec>
             </div>
         </div>
     </div>
@@ -34,12 +33,14 @@
 <script>
 import scrollbar from './subcomponents/scrollbar'
 import buttons from './subcomponents/buttons'
+import titlec from './subcomponents/title'
+import message from './subcomponents/message'
 
 export default {
   name: 'displaymenu',
 
   components: {
-    scrollbar, buttons
+    scrollbar, buttons, titlec, message
   },
 
   created () {
@@ -66,22 +67,10 @@ export default {
       } else {
         return { width: x + 'ch', whiteSpace: 'nowrap', overflow: 'hidden' }
       }
-    },
-
-    messagestyle (message) {
-      if (message === null) {
-        return
-      }
-
-      return 'message_' + message.type
     }
   },
 
   computed: {
-    title () {
-      return this.$myStore.state.payload.title
-    },
-
     buttons () {
       return this.$myStore.state.payload.buttons
     },
@@ -92,18 +81,6 @@ export default {
 
     tabs () {
       return this.$myStore.state.payload.tabs
-    },
-
-    message () {
-      return this.$myStore.state.payload.message
-    },
-
-    currentTime: {
-      cache: false,
-      get () {
-        var d = new Date()
-        return d.getDate() + '.' + (d.getMonth() + 1) + '.' + d.getFullYear() + '  ' + ('0' + d.getHours()).slice(-2) + ':' + ('0' + d.getMinutes()).slice(-2)
-      }
     }
   }
 }
@@ -157,14 +134,6 @@ export default {
 
 .header {
     grid-area: header;
-    text-align: left;
-    color: @clrMenuTitleFg;
-    background-color: @clrMenuTitleBg;
-}
-
-.currentTime {
-    text-align: right;
-    margin-left: 85%;
 }
 
 .current {
@@ -178,25 +147,5 @@ export default {
 
 .selectable {
     color: @clrMenuItemSelectable;
-}
-
-.message_0 {
-    color: @clrMessageStatusFg;
-    background-color: @clrMessageStatusBg;
-}
-
-.message_1 {
-    color: @clrMessageInfoFg;
-    background-color: @clrMessageInfoBg;
-}
-
-.message_2 {
-    color: @clrMessageWarningFg;
-    background-color: @clrMessageWarningBg;
-}
-
-.message_3 {
-    color: @clrMessageErrorFg;
-    background-color: @clrMessageErrorBg;
 }
 </style>

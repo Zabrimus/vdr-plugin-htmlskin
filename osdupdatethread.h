@@ -24,6 +24,8 @@ public:
     void startUpdate(int width, int height);
     void stopUpdate();
 
+    void FlushOsd();
+
 private:
     int streamSocketId;
     int streamEndpointId;
