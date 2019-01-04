@@ -12,6 +12,7 @@
 
 #include <vdr/plugin.h>
 #include "htmlskin.h"
+#include "htmlskindemo.h"
 
 static const char *VERSION = "0.0.1";
 static const char *DESCRIPTION = "Enter description for 'htmlskin' plugin";
@@ -107,8 +108,7 @@ time_t cPluginHtmlSkin::WakeupTime() {
 }
 
 cOsdObject *cPluginHtmlSkin::MainMenuAction() {
-    // Perform the action when selected from the main VDR menu.
-    return nullptr;
+    return new cHtmlSkinDemoMenu("Html Skin Demo");
 }
 
 cMenuSetupPage *cPluginHtmlSkin::SetupMenu() {

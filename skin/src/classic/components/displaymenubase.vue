@@ -7,6 +7,7 @@
 <script>
 import displaymenu from './displaymenu'
 import displaymenuevent from './displaymenuevent'
+import displayhtmlpage from './displayhtmlpage'
 
 export default {
   name: 'displaymenubase',
@@ -43,21 +44,29 @@ export default {
         { name: 'menuEvent', component: 'displaymenuevent' },
         { name: 'menuText', component: 'displaymenu' },
         { name: 'menuFolder', component: 'displaymenu' },
-        { name: 'menuCam', component: 'displaymenu' }
+        { name: 'menuCam', component: 'displaymenu' },
+        { name: 'menuHtmlPage', component: 'displayhtmlpage' }
       ]
     }
   },
 
   components: {
     /* eslint-disable vue/no-unused-components */
-    displaymenu, displaymenuevent
+    displaymenu, displaymenuevent, displayhtmlpage
   },
 
   computed: {
     currentmenu: function () {
       if (this.$myStore.state.currentMenu !== null) {
         if (this.$myStore.state.currentMenu <= this.menus.length) {
-          return this.menus[this.$myStore.state.currentMenu + 1].component
+          console.log('TITLE: ' + this.$myStore.state.payload.title)
+
+          // do some special handling
+          if ((this.menus[this.$myStore.state.currentMenu + 1].name === 'menuUndefined') && this.$myStore.state.payload.title.startsWith('$>>>')) {
+            return 'displayhtmlpage'
+          } else {
+            return this.menus[this.$myStore.state.currentMenu + 1].component
+          }
         } else {
           return 'displaymenu'
         }

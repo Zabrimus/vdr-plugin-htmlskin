@@ -17,7 +17,7 @@
 #include <vdr/skins.h>
 
 // to enable much more debug data output to stderr, set this variable to true
-static bool DumpDebugData = true;
+static bool DumpDebugData = false;
 
 #define dbgskin(a...) if (DumpDebugData) fprintf(stderr, a)
 
@@ -42,7 +42,11 @@ public:
     static bool setBrowserSize(int width, int height);
     static bool setZoomLevel(double zoom);
 
+    // TODO sendKeyEvent is currently not working in CEF. I don't know what exactly is wrong.
+    static bool sendKeyEvent(cString key);
+
     static void callJavascript(cString method, cString page, json_t* data);
+    static void callRawJavascript(cString script);
 
 private:
     static char* skinUrl;

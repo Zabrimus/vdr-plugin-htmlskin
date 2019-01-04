@@ -31,6 +31,9 @@ TMPDIR ?= /tmp
 export CFLAGS   = $(call PKGCFG,cflags)
 export CXXFLAGS = $(call PKGCFG,cxxflags)
 
+CFLAGS += -O3
+CXXFLAGS += -O3
+
 ### The version number of VDR's plugin API:
 
 APIVERSION = $(call PKGCFG,apiversion)
@@ -59,7 +62,7 @@ DEFINES += -DPLUGIN_NAME_I18N='"$(PLUGIN)"'
 OBJS = $(PLUGIN).o \
         htmlskindisplaymenu.o htmlskindisplaychannel.o htmlskindisplayvolume.o htmlskindisplayreplay.o \
         htmlskindisplaytracks.o htmlskindisplaymessage.o JsonUtil.o pluginhtmlskin.o \
-        osdupdatethread.o
+        osdupdatethread.o htmlskindemo.o
 
 ### libraries
 LIBS += $(shell pkg-config --cflags --libs jansson)

@@ -127,6 +127,13 @@ void cHtmlSkin::callJavascript(cString method, cString page, json_t* data) {
     free(cmd);
 }
 
+void cHtmlSkin::callRawJavascript(cString script) {
+    char *cmd;
+    asprintf(&cmd, "JS %s", *script);
+    skin->sendCommand(cmd);
+    free(cmd);
+}
+
 bool cHtmlSkin::setBrowserSize(int width, int height) {
     char *cmd;
 
@@ -180,3 +187,12 @@ bool cHtmlSkin::sendCommand(const char* command) {
     return returnValue;
 }
 
+bool cHtmlSkin::sendKeyEvent(cString key) {
+    char *cmd;
+
+    asprintf(&cmd, "KEY %s", *key);
+    auto result = skin->sendCommand(cmd);
+    free(cmd);
+
+    return result;
+}

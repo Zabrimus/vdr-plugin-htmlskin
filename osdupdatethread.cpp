@@ -111,8 +111,8 @@ void cOsdUpdateThread::readStream(cPixmapMemory *pixmap) {
                 if ((bytes = nn_recv(upd->streamSocketId, &h, sizeof(h), 0)) > 0) {
                 }
 
-                dsyslog("Received dirty rec: (x %d, y %d) -> (w %d, h %d)\n",x, y, w, h);
-                dbgskin("Received dirty rec: (x %d, y %d) -> (w %d, h %d)\n",x, y, w, h);
+                dsyslog("Received dirty rec: (x %d, y %d) -> (w %d, h %d)\n", x, y, w, h);
+                dbgskin("Received dirty rec: (x %d, y %d) -> (w %d, h %d)\n", x, y, w, h);
 
                 {
                     // create empty image and fill the image data
