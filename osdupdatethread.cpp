@@ -114,25 +114,25 @@ void cOsdUpdateThread::readStream(cPixmapMemory *pixmap) {
                 dsyslog("Received dirty rec: (x %d, y %d) -> (w %d, h %d)\n", x, y, w, h);
                 dbgskin("Received dirty rec: (x %d, y %d) -> (w %d, h %d)\n", x, y, w, h);
 
-                {
-                    // create empty image and fill the image data
-                    cSize size(w, h);
-                    cImage image(size, nullptr);
+                cPixmapMemory::Lock();
 
-                    auto color = const_cast<tColor*>(image.Data());
+                auto data = const_cast<uint8_t*>(pixmap->Data());
 
-                    for (int j = 0; j < h; ++j) {
-                        if ((bytes = nn_recv(upd->streamSocketId, color + j * w, 4 * w, 0)) > 0) {
-                            // everything is fine
-                        }
+                for (int j = 0; j < h; ++j) {
+                    if ((bytes = nn_recv(upd->streamSocketId, data + 4 * (cOsd::OsdWidth() * j + x), 4 * w, 0)) > 0) {
+                        // everything is fine
                     }
-
-                    // write image to pixmap
-                    cPoint point(x,y);
-                    pixmap->DrawImage(point, image);
-
-                    upd->osd->Flush();
                 }
+
+                auto dirty1 = const_cast<cRect*>(&pixmap->DirtyDrawPort());
+                auto dirty2 = const_cast<cRect*>(&pixmap->DirtyViewPort());
+
+                dirty1->Set(0, 0, cOsd::OsdWidth(), cOsd::OsdHeight());
+                dirty2->Set(0, 0, cOsd::OsdWidth(), cOsd::OsdHeight());
+
+                cPixmapMemory::Unlock();
+
+                upd->osd->Flush();
             }
         }
     }
