@@ -144,4 +144,4 @@ clean:
 	@-rm -f $(OBJS) $(DEPFILE) *.so *.tgz core* *~
 
 prepare:
-	$(MAKE) -C skin npm install
+	$(MAKE) -C skin preparedev
