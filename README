@@ -21,5 +21,14 @@ Requirements:
 - jansson (http://www.digip.org/jansson/), tested with 2.9
 - VDR >= 2.4.0
 
+Zusätzlich werden andere Pakete benötigt
+apt install npm node-gyp nodejs-dev libssl1.0-dev
+
+
+Build Vorbereitung (einmalig):
+make prepare
+
 Build:
+Im Plugin-Verzeichnis
 make && make install
+
