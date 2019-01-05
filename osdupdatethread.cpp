@@ -127,8 +127,8 @@ void cOsdUpdateThread::readStream(cPixmapMemory *pixmap) {
                 auto dirty1 = const_cast<cRect*>(&pixmap->DirtyDrawPort());
                 auto dirty2 = const_cast<cRect*>(&pixmap->DirtyViewPort());
 
-                dirty1->Set(0, 0, cOsd::OsdWidth(), cOsd::OsdHeight());
-                dirty2->Set(0, 0, cOsd::OsdWidth(), cOsd::OsdHeight());
+                dirty1->Set(x, y, w, h);
+                dirty2->Set(x, y, w, h);
 
                 cPixmapMemory::Unlock();
 
