@@ -13,14 +13,14 @@
 #include <vdr/plugin.h>
 #include "htmlskin.h"
 #include "htmlskindemo.h"
+#include "config.h"
+#include "setup.h"
 
 static const char *VERSION = "0.0.1";
 static const char *DESCRIPTION = "Enter description for 'htmlskin' plugin";
 static const char *MAINMENUENTRY = "HTML Skin";
 
 class htmlskin;
-
-static const char *DUMMY = tr("WAT");
 
 class cPluginHtmlSkin: public cPlugin {
 private:
@@ -113,12 +113,12 @@ cOsdObject *cPluginHtmlSkin::MainMenuAction() {
 
 cMenuSetupPage *cPluginHtmlSkin::SetupMenu() {
     // Return a setup menu in case the plugin supports one.
-    return nullptr;
+    return new SkinhtmlSetup();
 }
 
 bool cPluginHtmlSkin::SetupParse(const char *Name, const char *Value) {
     // Parse your own setup parameters and store their values.
-    return false;
+    return htmlskinConfig.SetupParse(Name, Value);
 }
 
 bool cPluginHtmlSkin::Service(const char *Id, void *Data) {

@@ -17,7 +17,7 @@
 #include <vdr/skins.h>
 
 // to enable much more debug data output to stderr, set this variable to true
-static bool DumpDebugData = false;
+static bool DumpDebugData = true;
 
 #define dbgskin(a...) if (DumpDebugData) fprintf(stderr, a)
 
@@ -41,6 +41,7 @@ public:
 
     static bool setBrowserSize(int width, int height);
     static bool setZoomLevel(double zoom);
+    static bool setRootFontSize(int px);
 
     // TODO sendKeyEvent is currently not working in CEF. I don't know what exactly is wrong.
     static bool sendKeyEvent(cString key);

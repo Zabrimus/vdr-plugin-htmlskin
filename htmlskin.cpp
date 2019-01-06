@@ -25,6 +25,7 @@
 #include "htmlskindisplayvolume.h"
 #include "htmlskindisplaytracks.h"
 #include "htmlskindisplaymessage.h"
+#include "config.h"
 
 char* cHtmlSkin::skinUrl;
 
@@ -100,6 +101,7 @@ bool cHtmlSkin::loadSkinPage() {
     std::string cmdUrl("URL ");
     cmdUrl.append(skinUrl);
     skin->sendCommand(cmdUrl.c_str());
+    skin->setRootFontSize(htmlskinConfig.rootFontSize);
 
     return true;
 }
@@ -156,6 +158,16 @@ bool cHtmlSkin::setZoomLevel(double zoom) {
     free(cmd);
 
     return result;
+}
+
+bool cHtmlSkin::setRootFontSize(int px) {
+    char *cmd;
+
+    asprintf(&cmd, "document.getElementsByTagName('html').item(0).style.fontSize = '%dpx'", px);
+    callRawJavascript(cmd);
+    free(cmd);
+
+    return true;
 }
 
 bool cHtmlSkin::sendCommand(const char* command) {

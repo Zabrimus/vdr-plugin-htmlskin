@@ -15,6 +15,7 @@
 #include "htmlskin.h"
 #include "htmlskindisplaymenu.h"
 #include "JsonUtil.h"
+#include "config.h"
 
 cHtmlSkinDisplayMenu::cHtmlSkinDisplayMenu() {
     dbgskin("Skin:cHtmlSkinDisplayMenu::Show\n");
@@ -35,7 +36,8 @@ void cHtmlSkinDisplayMenu::Scroll(bool Up, bool Page) {
 
 int cHtmlSkinDisplayMenu::MaxItems() {
     dbgskin("Skin:cHtmlSkinDisplayMenu::MaxItems\n");
-    return 10;
+
+    return (2 * cOsd::OsdHeight()) / (3 * htmlskinConfig.rootFontSize) - 4;
 }
 
 void cHtmlSkinDisplayMenu::Clear() {
