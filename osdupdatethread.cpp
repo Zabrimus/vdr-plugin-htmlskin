@@ -118,7 +118,7 @@ void cOsdUpdateThread::readStream(cPixmapMemory *pixmap) {
 
                 auto data = const_cast<uint8_t*>(pixmap->Data());
 
-                for (int j = 0; j < h; ++j) {
+                for (int j = y; j < y + h; ++j) {
                     if ((bytes = nn_recv(upd->streamSocketId, data + 4 * (cOsd::OsdWidth() * j + x), 4 * w, 0)) > 0) {
                         // everything is fine
                     }
@@ -127,8 +127,11 @@ void cOsdUpdateThread::readStream(cPixmapMemory *pixmap) {
                 auto dirty1 = const_cast<cRect*>(&pixmap->DirtyDrawPort());
                 auto dirty2 = const_cast<cRect*>(&pixmap->DirtyViewPort());
 
-                dirty1->Set(x, y, w, h);
-                dirty2->Set(x, y, w, h);
+                // dirty1->Set(x, y, w, h);
+                // dirty2->Set(x, y, w, h);
+
+                dirty1->Set(0, 0, cOsd::OsdWidth(), cOsd::OsdHeight());
+                dirty2->Set(0, 0, cOsd::OsdWidth(), cOsd::OsdHeight());
 
                 cPixmapMemory::Unlock();
 
