@@ -21,8 +21,6 @@ export default {
     },
 
     viewbox () {
-      console.log('DIV HEIGHT: ' + this.scrolldivHeight)
-
       return '0 0 20 ' + this.scrolldivHeight
     },
 
@@ -35,12 +33,8 @@ export default {
         var ch = this.scrolldivHeight * this.scrollbar.max / this.scrollbar.total
         var cy = this.scrolldivHeight * this.scrollbar.offset / this.scrollbar.total
 
-        console.log('Scrollbar: Height: ' + ch + ', y ' + cy)
-
         return { height: ch, y: cy }
       } else {
-        console.log('Scrollbar: Height: 0')
-
         return { height: 0, y: 0 }
       }
     }
