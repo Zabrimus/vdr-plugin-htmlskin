@@ -14,7 +14,10 @@
 #include <nanomsg/nn.h>
 #include <nanomsg/pipeline.h>
 #include <string>
+#include <math.h>
 
+#include <vdr/config.h>
+#include <vdr/device.h>
 #include "htmlskin.h"
 #include "osdupdatethread.h"
 
@@ -60,6 +63,12 @@ cOsdUpdateThread::~cOsdUpdateThread() {
 
 void cOsdUpdateThread::startUpdate(int width, int height) {
     cHtmlSkin::setBrowserSize(width, height);
+
+    // try to calculate an appropriate zoom level
+    // Full HD is 1920 x 1080 = 2073600 Pixel
+    auto newPixel = (double)width * (double)height;
+    auto zoom = sqrt(newPixel / 2073600.0);
+    cHtmlSkin::setZoomLevel(zoom);
 
     osd = cOsdProvider::NewOsd(cOsd::OsdLeft(), cOsd::OsdTop());
 

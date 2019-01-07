@@ -12,6 +12,7 @@
 
 #include <vdr/skins.h>
 #include <vdr/timers.h>
+#include <vdr/device.h>
 #include "htmlskin.h"
 #include "htmlskindisplaymenu.h"
 #include "JsonUtil.h"
@@ -37,7 +38,13 @@ void cHtmlSkinDisplayMenu::Scroll(bool Up, bool Page) {
 int cHtmlSkinDisplayMenu::MaxItems() {
     dbgskin("Skin:cHtmlSkinDisplayMenu::MaxItems\n");
 
-    return (2 * cOsd::OsdHeight()) / (3 * htmlskinConfig.rootFontSize) - 4;
+    int Width;
+    int Height;
+    double Aspect;
+    cDevice::PrimaryDevice()->GetOsdSize(Width, Height, Aspect);
+
+    int h = (int) ( (double)cOsd::OsdHeight() * 1080.0 / (double)Height);
+    return (4 * h) / (5 * htmlskinConfig.rootFontSize);
 }
 
 void cHtmlSkinDisplayMenu::Clear() {
