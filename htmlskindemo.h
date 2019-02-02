@@ -18,9 +18,9 @@
 
 class cHtmlSkinDemoMenu: public cOsdMenu {
 public:
-    cHtmlSkinDemoMenu(const char* title);
-    virtual ~cHtmlSkinDemoMenu();
-    virtual eOSState ProcessKey(eKeys key);
+    explicit cHtmlSkinDemoMenu(const char* title);
+    ~cHtmlSkinDemoMenu() override;
+    eOSState ProcessKey(eKeys key) override;
 
 private:
 
@@ -29,8 +29,8 @@ private:
 class cHtmlSkinDemoPage: public cOsdMenu {
 public:
     cHtmlSkinDemoPage(const char* title, int demo);
-    ~cHtmlSkinDemoPage();
-    virtual eOSState ProcessKey(eKeys key);
+    ~cHtmlSkinDemoPage() override;
+    eOSState ProcessKey(eKeys key) override;
 
 private:
     int number;

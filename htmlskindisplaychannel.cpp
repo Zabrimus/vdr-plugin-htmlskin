@@ -25,7 +25,7 @@ cHtmlSkinDisplayChannel::cHtmlSkinDisplayChannel(bool WithInfo) {
     doFlush = true;
     data = json_object();
 
-    startUpdate(cOsd::OsdWidth(), cOsd::OsdHeight());
+    browser->startUpdate(cOsd::OsdLeft(), cOsd::OsdTop(), cOsd::OsdWidth(), cOsd::OsdHeight());
 }
 
 cHtmlSkinDisplayChannel::~cHtmlSkinDisplayChannel() {
@@ -67,7 +67,7 @@ void cHtmlSkinDisplayChannel::Flush() {
     dbgskin("Skin:cHtmlSkinDisplayChannel::Flush\n");
 
     if (doFlush) {
-        cHtmlSkin::callJavascript(cString("showPage"), cString("displaychannel"), data);
+        browser->callJavascript(cString("showPage"), cString("displaychannel"), data);
     }
 
     // FlushOsd();

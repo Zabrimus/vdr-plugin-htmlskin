@@ -21,13 +21,13 @@ cHtmlSkinDisplayVolume::cHtmlSkinDisplayVolume(void) {
     doFlush = true;
     data = json_object();
 
-    startUpdate(cOsd::OsdWidth(), cOsd::OsdHeight());
+    browser->startUpdate(cOsd::OsdLeft(), cOsd::OsdTop(), cOsd::OsdWidth(), cOsd::OsdHeight());
 }
 
 cHtmlSkinDisplayVolume::~cHtmlSkinDisplayVolume() {
     dbgskin("Skin:cHtmlSkinDisplayVolume::Hide\n");
 
-    cHtmlSkin::hideBrowser();
+    browser->hideBrowser();
 }
 
 void cHtmlSkinDisplayVolume::SetVolume(int Current, int Total, bool Mute) {
@@ -42,7 +42,7 @@ void cHtmlSkinDisplayVolume::Flush() {
     dbgskin("Skin:cHtmlSkinDisplayVolume::Flush\n");
 
     if (doFlush) {
-        cHtmlSkin::callJavascript(cString("showPage"), cString("displayvolume"), data);
+        browser->callJavascript(cString("showPage"), cString("displayvolume"), data);
     }
 
     doFlush = false;

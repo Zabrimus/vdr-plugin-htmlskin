@@ -19,7 +19,7 @@
 cHtmlSkinDisplayTracks::cHtmlSkinDisplayTracks(const char *Title, int NumTracks, const char * const *Tracks) {
     dbgskin("Skin:cHtmlSkinDisplayTracks::Show(%s, %d)\n", Title, NumTracks);
 
-    startUpdate(cOsd::OsdWidth(), cOsd::OsdHeight());
+    browser->startUpdate(cOsd::OsdLeft(), cOsd::OsdTop(), cOsd::OsdWidth(), cOsd::OsdHeight());
 
     doFlush = true;
     data = json_object();
@@ -64,7 +64,7 @@ void cHtmlSkinDisplayTracks::Flush() {
     dbgskin("Skin:cHtmlSkinDisplayTracks::Flush\n");
 
     if (doFlush) {
-        cHtmlSkin::callJavascript(cString("showPage"), cString("displaytracks"), data);
+        browser->callJavascript(cString("showPage"), cString("displaytracks"), data);
     }
 
     doFlush = false;

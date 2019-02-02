@@ -62,7 +62,7 @@ DEFINES += -DPLUGIN_NAME_I18N='"$(PLUGIN)"'
 OBJS = $(PLUGIN).o \
         htmlskindisplaymenu.o htmlskindisplaychannel.o htmlskindisplayvolume.o htmlskindisplayreplay.o \
         htmlskindisplaytracks.o htmlskindisplaymessage.o JsonUtil.o pluginhtmlskin.o \
-        osdupdatethread.o htmlskindemo.o config.o setup.o
+        htmlskindemo.o config.o setup.o lib/browser.o
 
 ### libraries
 LIBS += $(shell pkg-config --cflags --libs jansson)

@@ -15,15 +15,14 @@
 
 #include <jansson.h>
 #include <vdr/skins.h>
-#include "osdupdatethread.h"
 
-class cHtmlSkinDisplayChannel: public cSkinDisplayChannel, public cOsdUpdateThread {
+class cHtmlSkinDisplayChannel: public cSkinDisplayChannel {
 private:
     bool doFlush;
     json_t* data;
 
 public:
-    cHtmlSkinDisplayChannel(bool WithInfo);
+    explicit cHtmlSkinDisplayChannel(bool WithInfo);
 
     ~cHtmlSkinDisplayChannel() override;
     void SetChannel(const cChannel *Channel, int Number) override;

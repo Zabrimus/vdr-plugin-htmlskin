@@ -24,7 +24,7 @@ cHtmlSkinDisplayMenu::cHtmlSkinDisplayMenu() {
     doFlush = true;
     data = json_object();
 
-    startUpdate(cOsd::OsdWidth(), cOsd::OsdHeight());
+    browser->startUpdate(cOsd::OsdLeft(), cOsd::OsdTop(), cOsd::OsdWidth(), cOsd::OsdHeight());
 }
 
 cHtmlSkinDisplayMenu::~cHtmlSkinDisplayMenu() {
@@ -222,7 +222,7 @@ void cHtmlSkinDisplayMenu::Flush() {
     dbgskin("Skin:cHtmlSkinDisplayMenu::Flush\n");
 
     if (doFlush) {
-        cHtmlSkin::callJavascript(cString("showPage"), cString("displaymenubase"), data);
+        browser->callJavascript(cString("showPage"), cString("displaymenubase"), data);
 
         // delete some objects
         json_object_del(data, "menutext");

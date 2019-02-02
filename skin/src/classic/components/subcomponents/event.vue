@@ -50,7 +50,7 @@ export default {
     .displaymenuevent {
     }
 
-    event-container {
+    .event-container {
         display: grid;
         grid-template-columns: 1fr;
         grid-template-rows: 1fr 1fr 1fr 1fr;

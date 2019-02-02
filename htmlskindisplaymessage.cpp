@@ -21,7 +21,7 @@ cHtmlSkinDisplayMessage::cHtmlSkinDisplayMessage() {
     doFlush = true;
     data = json_object();
 
-    startUpdate(cOsd::OsdWidth(), cOsd::OsdHeight());
+    browser->startUpdate(cOsd::OsdLeft(), cOsd::OsdTop(), cOsd::OsdWidth(), cOsd::OsdHeight());
 }
 
 cHtmlSkinDisplayMessage::~cHtmlSkinDisplayMessage() {
@@ -40,7 +40,7 @@ void cHtmlSkinDisplayMessage::Flush() {
     dbgskin("Skin:cHtmlSkinDisplayMessage::Flush\n");
 
     if (doFlush) {
-        cHtmlSkin::callJavascript(cString("showPage"), cString("displaymessage"), data);
+        browser->callJavascript(cString("showPage"), cString("displaymessage"), data);
     }
 
     doFlush = false;

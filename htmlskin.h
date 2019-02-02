@@ -15,11 +15,11 @@
 
 #include <jansson.h>
 #include <vdr/skins.h>
+#include "lib/browser.h"
 
 // to enable much more debug data output to stderr, set this variable to true
-static bool DumpDebugData = true;
-
-#define dbgskin(a...) if (DumpDebugData) fprintf(stderr, a)
+extern bool DumpSkinDebugData;
+#define dbgskin(a...) if (DumpSkinDebugData) fprintf(stderr, a)
 
 class cHtmlSkin: public cSkin {
 public:
@@ -34,30 +34,11 @@ public:
     cSkinDisplayTracks *DisplayTracks(const char *Title, int NumTracks, const char * const *Tracks) override;
     cSkinDisplayMessage *DisplayMessage() override;
 
-    static bool loadSkinPage();
-
-    static bool hideBrowser();
-    static bool showBrowser();
-
-    static bool setBrowserSize(int width, int height);
-    static bool setZoomLevel(double zoom);
-    static bool setRootFontSize(int px);
-
-    // TODO sendKeyEvent is currently not working in CEF. I don't know what exactly is wrong.
-    static bool sendKeyEvent(cString key);
-
-    static void callJavascript(cString method, cString page, json_t* data);
-    static void callRawJavascript(cString script);
-
 private:
-    static char* skinUrl;
-
-    int commandSocketId;
-    int commandEndpointId;
-
-    bool sendCommand(const char* command);
+    char* skinUrl;
 };
 
 extern cHtmlSkin* skin;
+extern Browser *browser;
 
 #endif /* HTMLSKIN_H_ */

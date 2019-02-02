@@ -15,9 +15,8 @@
 
 #include <jansson.h>
 #include <vdr/skins.h>
-#include "osdupdatethread.h"
 
-class cHtmlSkinDisplayReplay: public cSkinDisplayReplay, public cOsdUpdateThread {
+class cHtmlSkinDisplayReplay: public cSkinDisplayReplay {
 private:
     cOsd *osd;
     cPixmapMemory *pixmap;
